@@ -1,5 +1,6 @@
 package com.coding2go;
 
+import com.coding2go.common.DistributionValidation;
 import com.coding2go.common.RealHelper;
 import com.coding2go.exceptions.DistributionException;
 import org.apache.log4j.Logger;
@@ -11,6 +12,7 @@ import java.util.List;
 public class DistributionGenerator {
     private static final Logger logger = Logger.getLogger(DistributionGenerator.class);
     private static final RealHelper realHelper = new RealHelper();
+    private static final DistributionValidation distributionValidation = new DistributionValidation();
     private final int numClasses;
 
     public DistributionGenerator(int numClasses) {
@@ -32,7 +34,7 @@ public class DistributionGenerator {
         }
         logger.info("Generated distribution: " + distribution);
 
-        check(distribution);
+        distributionValidation.validate(distribution);
         logger.info("Distribution successfully generated.");
 
         return distribution;
@@ -43,31 +45,5 @@ public class DistributionGenerator {
      */
     double getDistribution(int klass) {
         return ((double) 1) / numClasses;
-    }
-
-    private void check(List<Double> distribution) {
-        checkDistributionSums1(distribution);
-        checkOnlyGreaterOrEqualsThan0(distribution);
-    }
-
-    private void checkDistributionSums1(List<Double> distribution) {
-        logger.info("Checking distribution sums 1.");
-        double sum = 0;
-        for(Double d : distribution) {
-            sum += d;
-        }
-
-        if(!realHelper.equals(sum, 1)) {
-            throw new DistributionException("The distribution adds up to " + sum + " instead of 1. Distribution " + distribution + ".");
-        }
-    }
-
-    private void checkOnlyGreaterOrEqualsThan0(List<Double> distribution) {
-        logger.info("Checking there are only natural values.");
-        for(Double d : distribution) {
-            if(d < 0) {
-                throw new DistributionException("There are negative values like " + d + " . Distribution " + distribution + ".");
-            }
-        }
     }
 }
