@@ -1,15 +1,16 @@
 package com.coding2go;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class PopulationTest {
+    private static final Logger logger = Logger.getLogger(PopulationTest.class);
     private Population population;
 
     @Test(expected = Exception.class)
@@ -75,14 +76,14 @@ public class PopulationTest {
     @Test
     public void given1_thenReturnsTheLastClass() {
         Population population = new Population(3, Arrays.asList(0.33, 0.67));
-        int klass = population.getClassForIndividual(1);
+        int klass = population.getClassForIndividual(0.999);
         assertEquals(population.getNumDiffClasses() - 1, klass);
     }
 
     @Test
     public void givenExtremeIndividual0_thenTheRightClassIsReturned() {
         Population population = new Population(3, Arrays.asList(0.33, 0.67));
-        int klass = population.getClassForIndividual(0.33);
+        int klass = population.getClassForIndividual(0.32);
         assertEquals(0, klass);
     }
 
@@ -106,4 +107,51 @@ public class PopulationTest {
         int klass = population.getClassForIndividual(0.5);
         assertEquals(1, klass);
     }
+
+    @Test
+    public void given0DistributionBeginning_thenTheRightClassIsReturned() {
+        Population population = new Population(3, Arrays.asList(0.0, 0.73, 0.27));
+        int klass = population.getClassForIndividual(0);
+        assertEquals(1, klass);
+    }
+
+    @Test
+    public void given0DistributionBeginning_thenTheRightClassIsReturned1() {
+        Population population = new Population(3, Arrays.asList(0.0, 0.73, 0.27));
+        int klass = population.getClassForIndividual(0.2);
+        assertEquals(1, klass);
+    }
+
+    @Test
+    public void given0DistributionMiddle_thenTheRightClassIsReturned() {
+        Population population = new Population(3, Arrays.asList(0.23, 0.0, 0.77));
+        int klass = population.getClassForIndividual(0.22999);
+        assertEquals(0, klass);
+    }
+
+    @Test
+    public void given0DistributionMiddle_thenTheRightClassIsReturned1() {
+        Population population = new Population(3, Arrays.asList(0.23, 0.0, 0.77));
+        int klass = population.getClassForIndividual(0.5);
+        assertEquals(2, klass);
+    }
+
+    @Test
+    public void given0DistributionMiddle_thenItNeverGetsReturned() {
+        long seed = System.currentTimeMillis();
+        logger.debug("Seed: " + seed);
+
+        List<Integer> zeroFreqClasses = Arrays.asList(0, 2, 3, 5, 7, 9);
+        Random random = new Random(seed);
+        //                                                          0    1    2    3    4     5    6    7    8     9
+        Population population = new Population(1000, Arrays.asList(0.0, 0.1, 0.0, 0.0, 0.33, 0.0, 0.4, 0.0, 0.17, 0.0));
+
+        int klass;
+        for(int i = 0; i < 30000; i++) {
+            klass = population.getClassForIndividual(random.nextDouble());
+            assertFalse(zeroFreqClasses.contains(klass));
+        }
+    }
+
+
 }

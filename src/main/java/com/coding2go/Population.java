@@ -52,7 +52,7 @@ public class Population {
         }
 
         for(int i = 0; i < accumulatedDistribution.size(); i++) {
-            if(individual <= accumulatedDistribution.get(i)) {
+            if(individual < accumulatedDistribution.get(i)) {
                 return i;
             }
         }
