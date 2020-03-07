@@ -39,7 +39,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenNoSelection_whenSelect_thenBelongsToTheRightClassAndNotSelected() {
-        selectAndAssert(populationSelectionExperiment, 0.5, 0, false);
+        selectAndAssert(populationSelectionExperiment, 0.4999, 0, false);
     }
 
     @Test
@@ -203,7 +203,7 @@ public class PopulationSelectionExperimentTest {
         List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
 
         assertEquals(0, repetition.get(0), 0.0001);
-        assertEquals(1, repetition.get(0), 0.0001);
+        assertEquals(0, repetition.get(1), 0.0001);
     }
 
     @Test
@@ -212,7 +212,7 @@ public class PopulationSelectionExperimentTest {
         List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
 
         assertEquals(0, repetition.get(0), 0.0001);
-        assertEquals(1, repetition.get(0), 0.0001);
+        assertEquals(0, repetition.get(1), 0.0001);
     }
 
     @Test
@@ -230,7 +230,7 @@ public class PopulationSelectionExperimentTest {
         populationSelectionExperiment.select(0.8);
         List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
         assertEquals(0, repetition.get(0), 0.0001);
-        assertEquals(1, repetition.get(0), 0.0001);
+        assertEquals(0, repetition.get(1), 0.0001);
     }
 
     @Test
@@ -275,11 +275,11 @@ public class PopulationSelectionExperimentTest {
     }
 
     private List<Double> getRepetionDistribution(PopulationSelectionExperiment experiment) {
-        return experiment.getResult().getRepetions();
+        return experiment.getResult().getRepetitions();
     }
 
     private PopulationSelectionExperiment createExperiment(int populationSize, List<Double> distribution) {
-        Population population = new Population(4, Arrays.asList(0.5, 0.5));
+        Population population = new Population(populationSize, distribution);
         return new PopulationSelectionExperiment(population);
     }
 
