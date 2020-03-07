@@ -60,6 +60,10 @@ public class Population {
         throw new RuntimeException("Unknown error. Class cannot be provided for individual " + individual + " using class distribution " + classDistribution + ".");
     }
 
+    public List<Double> getClassDistribution() {
+        return new ArrayList<>(classDistribution);
+    }
+
     private void createAccumulatedDistribution() {
         accumulatedDistribution = new ArrayList<>();
         accumulatedDistribution.add(classDistribution.get(0));

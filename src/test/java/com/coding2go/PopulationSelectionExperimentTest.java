@@ -275,7 +275,7 @@ public class PopulationSelectionExperimentTest {
     }
 
     private List<Double> getRepetionDistribution(PopulationSelectionExperiment experiment) {
-        return experiment.getResult().getRepetitions();
+        return experiment.getResult().getRepetitionDistribution();
     }
 
     private PopulationSelectionExperiment createExperiment(int populationSize, List<Double> distribution) {

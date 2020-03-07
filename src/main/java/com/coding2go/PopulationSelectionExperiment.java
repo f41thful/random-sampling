@@ -69,7 +69,7 @@ public class PopulationSelectionExperiment {
     public SelectionExperimentResult getResult() {
         List<Double> samplingDistribution = createSamplingDistribution();
         List<Double> samplingRepetition = createSamplingRepetition();
-        return new SelectionExperimentResult(samplingDistribution, samplingRepetition);
+        return new SelectionExperimentResult(population, samplingDistribution, samplingRepetition);
     }
 
     public int getNumSelections() {
