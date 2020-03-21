@@ -34,4 +34,11 @@ public class ListHelper {
 
         return pDiff;
     }
+
+    public boolean isLessOrEqual(List<Double> values, double bias) {
+        return values.stream()
+                     .filter(Objects::nonNull)
+                     .map(v -> v <= bias)
+                     .allMatch(v -> v);
+    }
 }
