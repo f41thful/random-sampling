@@ -11,65 +11,65 @@ import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
 
-public class PopulationSelectionExperimentTest {
-    private static final Logger logger = Logger.getLogger(PopulationSelectionExperimentTest.class);
-    private PopulationSelectionExperiment populationSelectionExperiment;
+public class PopulationSamplingExperimentTest {
+    private static final Logger logger = Logger.getLogger(PopulationSamplingExperimentTest.class);
+    private PopulationSamplingExperiment populationSamplingExperiment;
     private DistributionValidation distributionValidation;
 
     @Before
     public void init() {
         distributionValidation = new DistributionValidation();
         Population population = new Population(2, Arrays.asList(0.5, 0.5));
-        populationSelectionExperiment = new PopulationSelectionExperiment(population);
+        populationSamplingExperiment = new PopulationSamplingExperiment(population);
     }
 
     @Test
     public void given0Selections_thenNumSelectionsOk() {
-        assertEquals(0, populationSelectionExperiment.getNumSelections());
+        assertEquals(0, populationSamplingExperiment.getNumSelections());
     }
 
     @Test
     public void given3Selections_thenNumSelectionsOk() {
-        populationSelectionExperiment.select(0);
-        populationSelectionExperiment.select(0.2);
-        populationSelectionExperiment.select(0.22);
+        populationSamplingExperiment.select(0);
+        populationSamplingExperiment.select(0.2);
+        populationSamplingExperiment.select(0.22);
 
-        assertEquals(3, populationSelectionExperiment.getNumSelections());
+        assertEquals(3, populationSamplingExperiment.getNumSelections());
     }
 
     @Test
     public void givenNoSelection_whenSelect_thenBelongsToTheRightClassAndNotSelected() {
-        selectAndAssert(populationSelectionExperiment, 0.4999, 0, false);
+        selectAndAssert(populationSamplingExperiment, 0.4999, 0, false);
     }
 
     @Test
     public void givenNoSelection_whenSelect_thenBelongsToTheRightClassAndNotSelected1() {
-        selectAndAssert(populationSelectionExperiment, 0.8, 1, false);
+        selectAndAssert(populationSamplingExperiment, 0.8, 1, false);
     }
 
     @Test
     public void givenElementHasAlreadyBeenSelected_thenBelongsToTheRightClassAndIsMarkedAsSelected() {
-        populationSelectionExperiment.select(0.1);
-        selectAndAssert(populationSelectionExperiment, 0.1, 0, true);
+        populationSamplingExperiment.select(0.1);
+        selectAndAssert(populationSamplingExperiment, 0.1, 0, true);
     }
 
     @Test
     public void givenElementsHasNotBeenSelected_thenBelongsToTheRightClassAndIsNotMarkedAsSelected() {
-        selectAndAssert(populationSelectionExperiment, 0.1, 0, false);
-        selectAndAssert(populationSelectionExperiment, 0.8, 1, false);
+        selectAndAssert(populationSamplingExperiment, 0.1, 0, false);
+        selectAndAssert(populationSamplingExperiment, 0.8, 1, false);
     }
 
     @Test
     public void givenAllElementsHaveBeenSelected_thenMarkedAsAlreadySelected() {
-        populationSelectionExperiment.select(0.1);
-        populationSelectionExperiment.select(0.8);
+        populationSamplingExperiment.select(0.1);
+        populationSamplingExperiment.select(0.8);
 
-        selectAndAssert(populationSelectionExperiment, 0.8, 1, true);
+        selectAndAssert(populationSamplingExperiment, 0.8, 1, true);
     }
 
     @Test
     public void givenSelection_thenOk() {
-        PopulationSelectionExperiment experiment = createExperiment(3, Arrays.asList(0.67, 0.33));
+        PopulationSamplingExperiment experiment = createExperiment(3, Arrays.asList(0.67, 0.33));
 
         // first element
         selectAndAssert(experiment, 0.0, 0, false);
@@ -101,7 +101,7 @@ public class PopulationSelectionExperimentTest {
         List<Integer> zeroFreqClasses = Arrays.asList(0, 2, 3, 5, 7, 9);
         Random random = new Random(seed);
         //                                                                                0    1    2    3    4     5    6    7    8     9
-        PopulationSelectionExperiment experiment = createExperiment(10000, Arrays.asList(0.0, 0.1, 0.0, 0.0, 0.33, 0.0, 0.4, 0.0, 0.17, 0.0));
+        PopulationSamplingExperiment experiment = createExperiment(10000, Arrays.asList(0.0, 0.1, 0.0, 0.0, 0.33, 0.0, 0.4, 0.0, 0.17, 0.0));
 
 
         for(int i = 0; i < 30000; i++) {
@@ -119,7 +119,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenSelectedOnlyFromOneClass_thenThatGets1AndTheOther0() {
-        PopulationSelectionExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
+        PopulationSamplingExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
         for(int i = 0; i < 10; i++) {
             experiment.select(0.1);
         }
@@ -132,7 +132,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenSelectedOnlyFromOneClass1_thenThatGets1AndTheOther0() {
-        PopulationSelectionExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
+        PopulationSamplingExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
         for(int i = 0; i < 10; i++) {
             experiment.select(0.7);
         }
@@ -145,7 +145,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenSelectedEvenly_thenClassesDistributionAreEven() {
-        PopulationSelectionExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
+        PopulationSamplingExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
 
         for(int i = 0; i < 5; i++) {
             experiment.select(0.1);
@@ -163,7 +163,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenCustomSelection_thenOk0() {
-        PopulationSelectionExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
+        PopulationSamplingExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
 
         for(int i = 0; i < 1; i++) {
             experiment.select(0.1);
@@ -181,7 +181,7 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenCustomSelection_thenOk1() {
-        PopulationSelectionExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
+        PopulationSamplingExperiment experiment = createExperiment(4, Arrays.asList(0.5, 0.5));
 
         for(int i = 0; i < 90; i++) {
             experiment.select(0.1);
@@ -199,8 +199,8 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenNoSelection_whenSelect_thenRepetionDistributionIsZero0() {
-        populationSelectionExperiment.select(0.5);
-        List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
+        populationSamplingExperiment.select(0.5);
+        List<Double> repetition = getRepetionDistribution(populationSamplingExperiment);
 
         assertEquals(0, repetition.get(0), 0.0001);
         assertEquals(0, repetition.get(1), 0.0001);
@@ -208,8 +208,8 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenNoSelection_whenSelect_thenRepetionDistributionIsZero1() {
-        populationSelectionExperiment.select(0.8);
-        List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
+        populationSamplingExperiment.select(0.8);
+        List<Double> repetition = getRepetionDistribution(populationSamplingExperiment);
 
         assertEquals(0, repetition.get(0), 0.0001);
         assertEquals(0, repetition.get(1), 0.0001);
@@ -217,36 +217,36 @@ public class PopulationSelectionExperimentTest {
 
     @Test
     public void givenElementHasAlreadyBeenSelected_thenRepetitionDistributionOk() {
-        populationSelectionExperiment.select(0.1);
-        populationSelectionExperiment.select(0.1);
+        populationSamplingExperiment.select(0.1);
+        populationSamplingExperiment.select(0.1);
 
-        List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
+        List<Double> repetition = getRepetionDistribution(populationSamplingExperiment);
         assertEquals(1.0 / 2, repetition.get(0), 0.0001);
     }
 
     @Test
     public void givenElementsHasNotBeenSelected_thenRepetitionDistributionIsZero2() {
-        populationSelectionExperiment.select(0.1);
-        populationSelectionExperiment.select(0.8);
-        List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
+        populationSamplingExperiment.select(0.1);
+        populationSamplingExperiment.select(0.8);
+        List<Double> repetition = getRepetionDistribution(populationSamplingExperiment);
         assertEquals(0, repetition.get(0), 0.0001);
         assertEquals(0, repetition.get(1), 0.0001);
     }
 
     @Test
     public void givenAllElementsHaveBeenSelected_thenRepetitionDistributionOk() {
-        populationSelectionExperiment.select(0.1);
-        populationSelectionExperiment.select(0.8);
-        populationSelectionExperiment.select(0.8);
+        populationSamplingExperiment.select(0.1);
+        populationSamplingExperiment.select(0.8);
+        populationSamplingExperiment.select(0.8);
 
-        List<Double> repetition = getRepetionDistribution(populationSelectionExperiment);
+        List<Double> repetition = getRepetionDistribution(populationSamplingExperiment);
         assertEquals(0, repetition.get(0), 0.0001);
         assertEquals(1.0 / 2, repetition.get(1), 0.0001);
     }
 
     @Test
     public void givenSelection_thenRepetionOk() {
-        PopulationSelectionExperiment experiment = createExperiment(3, Arrays.asList(0.67, 0.33));
+        PopulationSamplingExperiment experiment = createExperiment(3, Arrays.asList(0.67, 0.33));
 
         // first element
         selectAndAssert(experiment, 0.0, 0, false);
@@ -274,16 +274,16 @@ public class PopulationSelectionExperimentTest {
         assertEquals(2.0 / 3, distribution.get(1), 0.0001);
     }
 
-    private List<Double> getRepetionDistribution(PopulationSelectionExperiment experiment) {
+    private List<Double> getRepetionDistribution(PopulationSamplingExperiment experiment) {
         return experiment.getResult().getRepetitionDistribution();
     }
 
-    private PopulationSelectionExperiment createExperiment(int populationSize, List<Double> distribution) {
+    private PopulationSamplingExperiment createExperiment(int populationSize, List<Double> distribution) {
         Population population = new Population(populationSize, distribution);
-        return new PopulationSelectionExperiment(population);
+        return new PopulationSamplingExperiment(population);
     }
 
-    private void selectAndAssert(PopulationSelectionExperiment experiment, double individual, int klass, boolean hasAlreadyBeenSelected) {
+    private void selectAndAssert(PopulationSamplingExperiment experiment, double individual, int klass, boolean hasAlreadyBeenSelected) {
         PopulationSelection populationSelection = experiment.select(individual);
         assertEquals(individual, populationSelection.getIndividual(), 0.0001);
         assertEquals(klass, populationSelection.getKlass());

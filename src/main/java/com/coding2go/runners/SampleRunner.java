@@ -1,7 +1,7 @@
 package com.coding2go.runners;
 
 import com.coding2go.Population;
-import com.coding2go.PopulationSelectionExperiment;
+import com.coding2go.PopulationSamplingExperiment;
 import com.coding2go.SelectionExperimentResult;
 import org.apache.log4j.Logger;
 
@@ -14,7 +14,7 @@ public class SampleRunner {
 
     private final Random random;
     private final int numTimes;
-    private final PopulationSelectionExperiment populationSelectionExperiment;
+    private final PopulationSamplingExperiment populationSamplingExperiment;
 
     public SampleRunner(Random random, int numSamples, Population population) {
         Objects.requireNonNull(random);
@@ -27,16 +27,16 @@ public class SampleRunner {
         this.random = random;
         this.numTimes = numSamples;
 
-        populationSelectionExperiment = new PopulationSelectionExperiment(population);
+        populationSamplingExperiment = new PopulationSamplingExperiment(population);
     }
 
     public SelectionExperimentResult run() {
         logger.info("Starts experiment with " + numTimes + " iterations.");
         for(int i = 0; i < numTimes; i++) {
-            populationSelectionExperiment.select(random.nextDouble());
+            populationSamplingExperiment.select(random.nextDouble());
         }
         logger.info("Finishes experiment with " + numTimes + " iterations.");
 
-        return populationSelectionExperiment.getResult();
+        return populationSamplingExperiment.getResult();
     }
 }

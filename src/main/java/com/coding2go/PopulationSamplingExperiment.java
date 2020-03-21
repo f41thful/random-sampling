@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PopulationSelectionExperiment {
-    private static final Logger logger = Logger.getLogger(PopulationSelectionExperiment.class);
+public class PopulationSamplingExperiment {
+    private static final Logger logger = Logger.getLogger(PopulationSamplingExperiment.class);
     private final RealHelper realHelper;
 
     private Population population;
@@ -21,7 +21,7 @@ public class PopulationSelectionExperiment {
     private List<Integer> absoluteSelectionsPerClass;
     private List<Integer> absoluteRepetitionsPerClass;
 
-    public PopulationSelectionExperiment(Population population) {
+    public PopulationSamplingExperiment(Population population) {
         realHelper = new RealHelper();
         this.population = population;
 
