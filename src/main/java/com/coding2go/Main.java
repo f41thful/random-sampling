@@ -1,6 +1,7 @@
 package com.coding2go;
 
 import com.coding2go.common.ListHelper;
+import com.coding2go.runners.SampleRunner;
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;
@@ -22,9 +23,9 @@ public class Main {
         int numTimes = 30_000;
 
         Population population = spanishElections2011();
-        ExperimentRunner experimentRunner = new ExperimentRunner(random, numTimes, population);
+        SampleRunner sampleRunner = new SampleRunner(random, numTimes, population);
 
-        SelectionExperimentResult result = experimentRunner.run();
+        SelectionExperimentResult result = sampleRunner.run();
 
         List<Double> populationDistribution = population.getClassDistribution();
         System.out.println("Population distribution: " + populationDistribution);
