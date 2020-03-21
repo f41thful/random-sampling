@@ -1,6 +1,6 @@
-package com.coding2go;
+package com.coding2go.executables;
 
-import com.coding2go.common.DistributionValidation;
+import com.coding2go.Population;
 import com.coding2go.common.ListHelper;
 import com.coding2go.distribution_examples.DistributionExamples;
 import com.coding2go.results.SelectionExperimentResult;

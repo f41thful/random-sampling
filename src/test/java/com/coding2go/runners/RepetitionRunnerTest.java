@@ -33,48 +33,71 @@ public class RepetitionRunnerTest {
 
     @Test
     public void givenDoesNotStopFast_thenNumTimesExperiments() {
-        repetitionRunner = spy(new RepetitionRunner(5, BIAS, false, mock(Random.class), 3, mock(Population.class)));
-        doReturn(mockExperimentResultLessThanBias(), mockExperimentResultGreaterThanBias()).when(repetitionRunner).runSamplingExperiment();
+        repetitionRunner = spy(new RepetitionRunner(5, BIAS, false, mock(Random.class), 3, mockPopulation()));
+        doReturn(mockExperimentResultLessOrEqualsThanBias(), mockExperimentResultGreaterThanBias()).when(repetitionRunner).runSamplingExperiment();
         RepetitionExperimentResult result = repetitionRunner.run();
 
         assertEquals(5, result.getExperiments().size());
         assertFalse(result.isLessOrEqualTheBias());
+        assertNotNull(result.getMeanSamplingDistribution());
+        assertNotNull(result.getStdSamplingDistribution());
+        assertNotNull(result.getMeanRepetitionDistribution());
+        assertNotNull(result.getStdRepetitionDistribution());
     }
 
     @Test
     public void givenStopFast_thenWhenGreaterThanBiasStops() {
-        repetitionRunner = spy(new RepetitionRunner(5, BIAS, true, mock(Random.class), 3, mock(Population.class)));
-        doReturn(mockExperimentResultLessThanBias(), mockExperimentResultGreaterThanBias()).when(repetitionRunner).runSamplingExperiment();
+        repetitionRunner = spy(new RepetitionRunner(5, BIAS, true, mock(Random.class), 3, mockPopulation()));
+        doReturn(mockExperimentResultLessOrEqualsThanBias(), mockExperimentResultGreaterThanBias()).when(repetitionRunner).runSamplingExperiment();
         RepetitionExperimentResult result = repetitionRunner.run();
 
         assertEquals(2, result.getExperiments().size());
         assertFalse(result.isLessOrEqualTheBias());
+        assertNotNull(result.getMeanSamplingDistribution());
+        assertNotNull(result.getStdSamplingDistribution());
+        assertNotNull(result.getMeanRepetitionDistribution());
+        assertNotNull(result.getStdRepetitionDistribution());
     }
 
     @Test
     public void givenAllLessThanBias_thenLessThanBiasFalse() {
-        repetitionRunner = spy(new RepetitionRunner(5, BIAS, false, mock(Random.class), 3, mock(Population.class)));
-        doReturn(mockExperimentResultLessThanBias()).when(repetitionRunner).runSamplingExperiment();
+        repetitionRunner = spy(new RepetitionRunner(5, BIAS, false, mock(Random.class), 3, mockPopulation()));
+        doReturn(mockExperimentResultLessOrEqualsThanBias()).when(repetitionRunner).runSamplingExperiment();
         RepetitionExperimentResult result = repetitionRunner.run();
 
         assertEquals(5, result.getExperiments().size());
         assertTrue(result.isLessOrEqualTheBias());
+        assertNotNull(result.getMeanSamplingDistribution());
+        assertNotNull(result.getStdSamplingDistribution());
+        assertNotNull(result.getMeanRepetitionDistribution());
+        assertNotNull(result.getStdRepetitionDistribution());
+    }
+
+    private Population mockPopulation() {
+        Population population = mock(Population.class);
+        List<Double> selectionDistribution = new ArrayList<>();
+        selectionDistribution.add(0.07);
+        selectionDistribution.add(0.08);
+
+        doReturn(selectionDistribution).when(population).getClassDistribution();
+        return population;
     }
 
     private SelectionExperimentResult mockExperimentResultGreaterThanBias() {
         SelectionExperimentResult result = mock(SelectionExperimentResult.class);
         List<Double> selectionDistribution = new ArrayList<>();
-        selectionDistribution.add(0.07);
-        selectionDistribution.add(0.08);
+        // (0.07 - 0.02) / 0.02 is the value to compare against.
+        selectionDistribution.add(0.2);
+        selectionDistribution.add(0.3);
         doReturn(selectionDistribution).when(result).getSelectionDistribution();
         return result;
     }
 
-    private SelectionExperimentResult mockExperimentResultLessThanBias() {
+    private SelectionExperimentResult mockExperimentResultLessOrEqualsThanBias() {
         SelectionExperimentResult result = mock(SelectionExperimentResult.class);
         List<Double> selectionDistribution = new ArrayList<>();
-        selectionDistribution.add(0.01);
-        selectionDistribution.add(0.02);
+        selectionDistribution.add(0.0735);
+        selectionDistribution.add(0.079);
         doReturn(selectionDistribution).when(result).getSelectionDistribution();
         return result;
     }
