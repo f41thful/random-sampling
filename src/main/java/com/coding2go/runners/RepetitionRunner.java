@@ -44,7 +44,7 @@ public class RepetitionRunner {
     }
 
     public RepetitionExperimentResult run() {
-        RepetitionExperimentResult repetitionExperimentResult = new RepetitionExperimentResult(numTimes, bias);
+        RepetitionExperimentResult repetitionExperimentResult = new RepetitionExperimentResult(numTimes, bias, population);
         SelectionExperimentResult selectionExperimentResult;
         for(int i = 0; i < numTimes; i++) {
             selectionExperimentResult = runSamplingExperiment();

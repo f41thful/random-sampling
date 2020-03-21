@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -124,5 +125,44 @@ public class ListHelperTest {
         values.add(0.06);
         values.add(null);
         assertFalse(listHelper.isLessOrEqual(values, IS_LESS_OR_EQUAL_BIAS) );
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void givenIllegalArgV0_thenException() {
+        listHelper.reGroupByIndex(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void givenIllegalArgV1_thenException() {
+        listHelper.reGroupByIndex(Collections.emptyList());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void givenIllegalArgV2_thenException() {
+        listHelper.reGroupByIndex(Arrays.asList(null, Arrays.asList()));
+    }
+
+    @Test
+    public void givenValidInput_thenOk() {
+        List<List<Integer>> result = listHelper.reGroupByIndex(Arrays.asList(
+            Arrays.asList(1,     2,   3, 4,  5),
+            Arrays.asList(1,     2,   3, 4,  5),
+            Arrays.asList(7,     8,   9, 10, 11),
+            Arrays.asList(12,   13, 14),
+            Arrays.asList(1,     2,  3),
+            Arrays.asList((Integer) null),
+            Arrays.asList((Integer) null),
+            Collections.emptyList(),
+            Arrays.asList(15,    16, 17, 18, 19, 20, 21))
+        );
+
+        assertEquals(7, result.size());
+        assertEquals(Arrays.asList(1, 1, 7, 12, 1, null, null, 15), result.get(0));
+        assertEquals(Arrays.asList(2, 2, 8, 13, 2, 16), result.get(1));
+        assertEquals(Arrays.asList(3, 3, 9, 14, 3, 17), result.get(2));
+        assertEquals(Arrays.asList(4, 4, 10, 18), result.get(3));
+        assertEquals(Arrays.asList(5, 5, 11, 19), result.get(4));
+        assertEquals(Arrays.asList(20), result.get(5));
+        assertEquals(Arrays.asList(21), result.get(6));
     }
 }

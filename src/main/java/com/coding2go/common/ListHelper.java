@@ -41,4 +41,33 @@ public class ListHelper {
                      .map(v -> v <= bias)
                      .allMatch(v -> v);
     }
+
+    public <T> List<List<T>> reGroupByIndex(List<List<T>> valuesGrouped) {
+        Objects.requireNonNull(valuesGrouped);
+
+        if(valuesGrouped.isEmpty()) {
+            throw new IllegalArgumentException("The input group cannot be empty.");
+        }
+
+        for(List<T> v : valuesGrouped) {
+            Objects.requireNonNull(v);
+        }
+
+        int maxSize = valuesGrouped.stream()
+                                   .map(List::size)
+                                   .max(Integer::compareTo).get();
+
+        List<List<T>> newGroup = new ArrayList<>();
+        for(int i = 0; i < maxSize; i++) {
+            newGroup.add(new ArrayList<>());
+        }
+
+        for(List<T> value : valuesGrouped) {
+            for(int i = 0; i < value.size(); i++) {
+                newGroup.get(i).add(value.get(i));
+            }
+        }
+
+        return newGroup;
+    }
 }
