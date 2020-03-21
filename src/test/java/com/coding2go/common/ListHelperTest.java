@@ -18,27 +18,27 @@ public class ListHelperTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void givenNullValueThenException() {
+    public void givenNullValue_thenException() {
         listHelper.pDiff(null, new ArrayList<>());
     }
 
     @Test(expected = NullPointerException.class)
-    public void givenNullReferenceThenException() {
+    public void givenNullReference_thenException() {
         listHelper.pDiff(new ArrayList<>(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void givenDifferentSizeThenException() {
+    public void givenDifferentSize_thenException() {
         listHelper.pDiff(Arrays.asList(1.0), Arrays.asList(1.0, 2.0));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void givenDifferentSizeThenExceptionV2() {
+    public void givenDifferentSize_thenExceptionV2() {
         listHelper.pDiff(Arrays.asList(1.0), new ArrayList<>());
     }
 
     @Test
-    public void givenNullValuesThenNullOutputOnlyInTheSamePosition() {
+    public void givenNullValues_thenNullOutputOnlyInTheSamePosition() {
         List<Double> value = Arrays.asList(1.0, null, 3.0);
         List<Double> reference = Arrays.asList(1.0, 2.0, 3.0);
 
@@ -49,7 +49,7 @@ public class ListHelperTest {
     }
 
     @Test
-    public void givenNullReferenceThenNullOutputOnlyInTheSamePosition() {
+    public void givenNullReference_thenNullOutputOnlyInTheSamePosition() {
         List<Double> value = Arrays.asList(1.0, 2.0, 3.0);
         List<Double> reference = Arrays.asList(1.0, null, 3.0);
 
@@ -60,7 +60,7 @@ public class ListHelperTest {
     }
 
     @Test
-    public void givenOkInputThenPDiffCalculated() {
+    public void givenOkInput_thenPDiffCalculated() {
         List<Double> value = Arrays.asList(1.0, 2.0, 3.0);
         List<Double> reference = Arrays.asList(1.0, 2.1, 2.9);
 
