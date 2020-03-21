@@ -1,7 +1,7 @@
 package com.coding2go.common;
 
 public class RealHelper {
-    private static final double BIAS = 0.0001;
+    public static final double BIAS = 0.0001;
     private static final RealHelper realHelper = new RealHelper();
 
     public boolean equals(double n0, double n1) {
