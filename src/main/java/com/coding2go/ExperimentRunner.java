@@ -13,16 +13,16 @@ public class ExperimentRunner {
     private final int numTimes;
     private final PopulationSelectionExperiment populationSelectionExperiment;
 
-    public ExperimentRunner(Random random, int numTimes, Population population) {
+    public ExperimentRunner(Random random, int numSamples, Population population) {
         Objects.requireNonNull(random);
         Objects.requireNonNull(population);
 
-        if(numTimes <= 0) {
-            throw new InvalidParameterException("numTimes must be > 0");
+        if(numSamples <= 0) {
+            throw new InvalidParameterException("numSamples must be > 0");
         }
 
         this.random = random;
-        this.numTimes = numTimes;
+        this.numTimes = numSamples;
 
         populationSelectionExperiment = new PopulationSelectionExperiment(population);
     }
