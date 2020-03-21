@@ -58,7 +58,7 @@ public class RepetitionRunner {
             boolean isLessOrEqualThanBias = isLessOrEqualThanBias(selectionExperimentResult);
             if(!isLessOrEqualThanBias) {
                 logger.info("Iteration " + i + " is greater than the bias.");
-                repetitionExperimentResult.setGreaterThanBias();
+                repetitionExperimentResult.incrementGreaterThanBias();
                 if(stopFast) {
                     logger.info("stop fast is enabled, stopping the runner.");
                     break;

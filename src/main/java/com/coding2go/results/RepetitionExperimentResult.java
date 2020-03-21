@@ -34,6 +34,7 @@ public class RepetitionExperimentResult {
     private List<Double> stdRepetitionDistribution;
 
     private boolean isLessOrEqualTheBias;
+    private int countGreaterThanBias;
 
     public RepetitionExperimentResult(int numTimes, double bias, Population population) {
         if (numTimes <= 0) {
@@ -62,6 +63,7 @@ public class RepetitionExperimentResult {
         isLessOrEqualTheBias = true;
         statisticsHelper = new StatisticsHelper();
         listHelper = new ListHelper();
+        countGreaterThanBias = 0;
     }
 
     public int getNumTimes() {
@@ -94,7 +96,12 @@ public class RepetitionExperimentResult {
 
     public boolean isLessOrEqualTheBias() {return isLessOrEqualTheBias;}
 
-    public void setGreaterThanBias() {
+    public float getGreaterThanBiasOver1() {
+        return ((float) countGreaterThanBias) / numTimes;
+    }
+
+    public void incrementGreaterThanBias() {
+        countGreaterThanBias++;
         isLessOrEqualTheBias = false;
     }
 

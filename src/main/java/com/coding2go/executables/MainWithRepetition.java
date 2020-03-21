@@ -4,9 +4,7 @@ import com.coding2go.Population;
 import com.coding2go.common.ListHelper;
 import com.coding2go.distribution_examples.DistributionExamples;
 import com.coding2go.results.RepetitionExperimentResult;
-import com.coding2go.results.SelectionExperimentResult;
 import com.coding2go.runners.RepetitionRunner;
-import com.coding2go.runners.SampleRunner;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -27,8 +25,8 @@ public class MainWithRepetition {
         logger.debug("Using seed: " + seed);
         Random random = new Random(seed);
 
-        int numSamples = 30_000;
-        int numTimes = 1;
+        int numSamples = 60_000;
+        int numTimes = 100;
         double bias = 0.05;
 
         Population population = distributionExamples.spanishElections2011();
@@ -38,12 +36,13 @@ public class MainWithRepetition {
 
         List<Double> populationDistribution = population.getClassDistribution();
         System.out.println();
-        System.out.println("Every result less or equal than bias (" + bias + "): " + result.isLessOrEqualTheBias());
-        System.out.println("Population distribution: " + populationDistribution);
-        System.out.println("Sampling distribution (mean):   " + result.getMeanSamplingDistribution());
-        System.out.println("Sampling distribution (std):   " + result.getStdSamplingDistribution());
+        System.out.print("Every result less or equal than bias (" + bias + "): " + result.isLessOrEqualTheBias());
+        System.out.println("(above the bias (over 1): " + result.getGreaterThanBiasOver1() + ")");
+        System.out.println("Population distribution       : " + populationDistribution);
+        System.out.println("Sampling distribution (mean)  : " + result.getMeanSamplingDistribution());
+        System.out.println("Sampling distribution (std)   : " + result.getStdSamplingDistribution());
         System.out.println("Repetition distribution (mean): " + result.getMeanRepetitionDistribution());
-        System.out.println("Repetition distribution (std): " + result.getStdRepetitionDistribution());
+        System.out.println("Repetition distribution (std) : " + result.getStdRepetitionDistribution());
 
         ListHelper listHelper = new ListHelper();
         System.out.println("pDiff: " + listHelper.pDiff(result.getMeanSamplingDistribution(), populationDistribution));

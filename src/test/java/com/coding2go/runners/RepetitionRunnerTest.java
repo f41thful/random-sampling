@@ -1,6 +1,7 @@
 package com.coding2go.runners;
 
 import com.coding2go.Population;
+import com.coding2go.common.RealHelper;
 import com.coding2go.results.RepetitionExperimentResult;
 import com.coding2go.results.SelectionExperimentResult;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class RepetitionRunnerTest {
         assertNotNull(result.getStdSamplingDistribution());
         assertNotNull(result.getMeanRepetitionDistribution());
         assertNotNull(result.getStdRepetitionDistribution());
+        assertEquals(0.8, result.getGreaterThanBiasOver1(), RealHelper.BIAS);
     }
 
     @Test
@@ -57,6 +59,8 @@ public class RepetitionRunnerTest {
         assertNotNull(result.getStdSamplingDistribution());
         assertNotNull(result.getMeanRepetitionDistribution());
         assertNotNull(result.getStdRepetitionDistribution());
+
+        assertEquals(0.2, result.getGreaterThanBiasOver1(), RealHelper.BIAS);
     }
 
     @Test
@@ -71,6 +75,7 @@ public class RepetitionRunnerTest {
         assertNotNull(result.getStdSamplingDistribution());
         assertNotNull(result.getMeanRepetitionDistribution());
         assertNotNull(result.getStdRepetitionDistribution());
+        assertEquals(0, result.getGreaterThanBiasOver1(), RealHelper.BIAS);
     }
 
     private Population mockPopulation() {

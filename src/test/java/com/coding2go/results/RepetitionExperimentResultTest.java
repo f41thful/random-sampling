@@ -2,6 +2,7 @@ package com.coding2go.results;
 
 import com.coding2go.Population;
 import com.coding2go.common.DistributionValidation;
+import com.coding2go.common.RealHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -74,6 +75,27 @@ public class RepetitionExperimentResultTest {
         repetitionExperimentResult.calculate();
         assertEquals(Arrays.asList(0.6, 0.1, 0.1, null, null), repetitionExperimentResult.getMeanSamplingDistribution());
         assertEquals(Arrays.asList(0.565685424949238, 0.14142135623730953, 0.14142135623730953, null, null), repetitionExperimentResult.getStdSamplingDistribution());
+    }
+
+    @Test
+    public void givenNotGreaterThanBias_thenGreaterThanBias0() {
+        repetitionExperimentResult = new RepetitionExperimentResult(2, BIAS, mock(Population.class));
+        assertEquals(0, repetitionExperimentResult.getGreaterThanBiasOver1(), RealHelper.BIAS);
+    }
+
+    @Test
+    public void givenAllGreaterThanBias_thenGreaterThanBias1() {
+        repetitionExperimentResult = new RepetitionExperimentResult(2, BIAS, mock(Population.class));
+        repetitionExperimentResult.incrementGreaterThanBias();
+        repetitionExperimentResult.incrementGreaterThanBias();
+        assertEquals(1, repetitionExperimentResult.getGreaterThanBiasOver1(), RealHelper.BIAS);
+    }
+
+    @Test
+    public void givenHalfGreaterThanBias_thenGreaterThanBias0Comma5() {
+        repetitionExperimentResult = new RepetitionExperimentResult(2, BIAS, mock(Population.class));
+        repetitionExperimentResult.incrementGreaterThanBias();
+        assertEquals(0.5, repetitionExperimentResult.getGreaterThanBiasOver1(), RealHelper.BIAS);
     }
 
     private SelectionExperimentResult createSamplingMock(List<Double> samplingDistribution) {
