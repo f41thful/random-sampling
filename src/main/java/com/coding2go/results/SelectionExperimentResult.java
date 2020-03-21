@@ -1,4 +1,6 @@
-package com.coding2go;
+package com.coding2go.results;
+
+import com.coding2go.Population;
 
 import java.util.List;
 

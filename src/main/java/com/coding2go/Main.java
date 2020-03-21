@@ -1,6 +1,7 @@
 package com.coding2go;
 
 import com.coding2go.common.ListHelper;
+import com.coding2go.results.SelectionExperimentResult;
 import com.coding2go.runners.SampleRunner;
 import org.apache.log4j.Logger;
 

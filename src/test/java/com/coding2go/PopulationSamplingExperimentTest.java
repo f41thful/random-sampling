@@ -1,6 +1,7 @@
 package com.coding2go;
 
 import com.coding2go.common.DistributionValidation;
+import com.coding2go.results.SelectionExperimentResult;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
