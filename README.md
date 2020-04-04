@@ -13,6 +13,11 @@ for those x times.
 The project is thouroughly tested. Tests were developed first. Error detection was of high concern so
 that no invalid data go through.
 
+The actual output of the program is units over 1.
+
+## Execution
+You can execute the project with the class **com.coding2go.executables.MainWithRepetition**.
+
 ## Example
 We can see in the following table the outcome of the Spanish elections of 2019 (second ones) along
 with sampling distribution output by the software depending on the number of samples.
