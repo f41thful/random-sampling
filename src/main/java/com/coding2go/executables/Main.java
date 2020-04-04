@@ -26,7 +26,7 @@ public class Main {
 
         int numTimes = 30_000;
 
-        Population population = distributionExamples.spanishElections2011();
+        Population population = distributionExamples.testSmallDistributions();
         SampleRunner sampleRunner = new SampleRunner(random, numTimes, population);
 
         SelectionExperimentResult result = sampleRunner.run();

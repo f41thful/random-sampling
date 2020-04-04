@@ -36,6 +36,11 @@ public class DistributionExamples {
         return new Population(1000, populationDistribution);
     }
 
+    public Population testSmallDistributions() {
+        List<Double> populationDistribution = Arrays.asList(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1);
+        return new Population(1000, populationDistribution);
+    }
+
     public Population testCoin() {
         List<Double> populationDistribution = Arrays.asList(0.5, 0.5);
         return new Population(2, populationDistribution);

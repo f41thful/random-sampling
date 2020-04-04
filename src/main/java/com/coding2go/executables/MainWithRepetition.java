@@ -25,18 +25,18 @@ public class MainWithRepetition {
         logger.debug("Using seed: " + seed);
         Random random = new Random(seed);
 
-        int numSamples = 60_000;
-        int numTimes = 100;
+        int numSamples = 40000;
+        int numTimes = 1;
         double bias = 0.05;
 
-        Population population = distributionExamples.spanishElections2011();
+        Population population = distributionExamples.spanishElections2019_1();
         RepetitionRunner repetitionRunner = new RepetitionRunner(numTimes, bias, false, random, numSamples, population);
 
         RepetitionExperimentResult result = repetitionRunner.run();
 
         List<Double> populationDistribution = population.getClassDistribution();
         System.out.println();
-        System.out.print("Every result less or equal than bias (" + bias + "): " + result.isLessOrEqualTheBias());
+        System.out.print("Every result less or equal than bias (" + bias + "): " + result.isLessOrEqualTheBias() + " ");
         System.out.println("(above the bias (over 1): " + result.getGreaterThanBiasOver1() + ")");
         System.out.println("Population distribution       : " + populationDistribution);
         System.out.println("Sampling distribution (mean)  : " + result.getMeanSamplingDistribution());
